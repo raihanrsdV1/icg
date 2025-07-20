@@ -35,7 +35,7 @@ int main(){
 	k = -p;
 	println(k);
 
-	if (k > 0 && p++ < 10) {
+	if (k < 0 || p++ < 10) {
 		println(i);
 		i = i + p;
 		println(i);

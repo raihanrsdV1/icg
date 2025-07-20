@@ -423,7 +423,7 @@ func_definition returns [string print_text]
 		writeIntoCodeFile(
 			$id->getText() + string(" ENDP")
 		);
-		// scopeOffset.pop_back();
+		scopeOffset.pop_back();
 		
     }
     | ts=type_specifier id=ID 
@@ -548,7 +548,7 @@ func_definition returns [string print_text]
 			$id->getText() + string(" ENDP")
 		);
 
-		// scopeOffset.pop_back();
+		scopeOffset.pop_back();
 
     }
     ;				
@@ -764,7 +764,7 @@ compound_statement returns [string print_text, string return_type]
 		: lcl=LCURL		{
 			if(!scoped){
 				symbolTable.enterScope();
-				scopeOffset.push_back(0);
+				// scopeOffset.push_back(0);
 			}
 			scoped = false;
 
@@ -798,7 +798,7 @@ compound_statement returns [string print_text, string return_type]
 				string("")
 			);
 			symbolTable.exitScope();
-			scopeOffset.pop_back();
+			// scopeOffset.pop_back();
 			$return_type = "void";
 			}
  		    ;
@@ -1425,18 +1425,7 @@ variable returns [string print_text, string dataType, bool isArray, SymbolInfo *
 			// writeIntoparserLogFile(
 			// 	string("DEBUG var condition check true: ") + msg
 			// );
-			if(symbol->getIsGlobal()){
-				writeIntoCodeFile(
-					string("\tMOV AX, ") + symbol->getName() +
-					string("\n\tPUSH AX; var push")
-				);
-			} else {
-				string offset = to_string(symbol->getOffset());
-				writeIntoCodeFile(
-					string("\tMOV AX, [BP - ") + offset + string("]\n") + 
-					string("\tPUSH AX; var push")
-				);
-			}
+			
 		}
 
 		$print_text = $id->getText();
@@ -1497,27 +1486,27 @@ variable returns [string print_text, string dataType, bool isArray, SymbolInfo *
 				$symbol = symbol;
 				$arr_ind = $expr.print_text;
 
-				if(symbol->getIsGlobal()){
+				// if(symbol->getIsGlobal()){
 
-					writeIntoCodeFile(
-						string("\tPOP BX ; arr offset\n") +
-						string("\tMOV AX, ") + symbol->getName() + string("[BX]") + 
-						string("\n\tPUSH AX; var push")
-					);
-				} else {
-					string offset = to_string(symbol->getOffset());
-					writeIntoCodeFile(	
-						string("\tPOP BX ; arr offset\n") +
-						string("\tSHL BX, 1\n") +
-						string("\tMOV AX, ") + offset + string("\n") +
-						string("\tSUB AX, BX\n") +
-						string("\tMOV BX, AX\n") +
-						string("\tMOV SI, BX\n") +
-						string("\tNEG SI\n") +
-						string("\tMOV AX, [BP + SI]\n") + 
-						string("\tPUSH AX; var push")
-					);
-				}
+				// 	writeIntoCodeFile(
+				// 		string("\tPOP BX ; arr offset\n") +
+				// 		string("\tMOV AX, ") + symbol->getName() + string("[BX]") + 
+				// 		string("\n\tPUSH AX; var push")
+				// 	);
+				// } else {
+				// 	string offset = to_string(symbol->getOffset());
+				// 	writeIntoCodeFile(	
+				// 		string("\tPOP BX ; arr offset\n") +
+				// 		string("\tSHL BX, 1\n") +
+				// 		string("\tMOV AX, ") + offset + string("\n") +
+				// 		string("\tSUB AX, BX\n") +
+				// 		string("\tMOV BX, AX\n") +
+				// 		string("\tMOV SI, BX\n") +
+				// 		string("\tNEG SI\n") +
+				// 		string("\tMOV AX, [BP + SI]\n") + 
+				// 		string("\tPUSH AX; var push")
+				// 	);
+				// }
 			}
 
 			writeIntoparserLogFile(
@@ -2210,9 +2199,45 @@ factor	returns [string print_text, string dataType, bool isArray, SymbolInfo * s
 		// writeIntoparserLogFile(
 		// 	string("DEBUG factor lexpr condition check: ") + msg
 		// );
-		
-		
 
+		SymbolInfo * symbol = $v.symbol;
+
+		if(symbol->getIsArray()){
+			if(symbol->getIsGlobal()){
+				writeIntoCodeFile(
+					string("\tPOP BX ; arr offset\n") +
+					string("\tMOV AX, ") + symbol->getName() + string("[BX]") + 
+					string("\n\tPUSH AX; var push")
+				);
+			} else {
+				string offset = to_string(symbol->getOffset());
+				writeIntoCodeFile(	
+					string("\tPOP BX ; arr offset\n") +
+					string("\tSHL BX, 1\n") +
+					string("\tMOV AX, ") + offset + string("\n") +
+					string("\tSUB AX, BX\n") +
+					string("\tMOV BX, AX\n") +
+					string("\tMOV SI, BX\n") +
+					string("\tNEG SI\n") +
+					string("\tMOV AX, [BP + SI]\n") + 
+					string("\tPUSH AX; var push")
+				);
+			}
+		} else {
+			if(symbol->getIsGlobal()){
+				writeIntoCodeFile(
+					string("\tMOV AX, ") + symbol->getName() +
+					string("\n\tPUSH AX; var push")
+				);
+			} else {
+				string offset = to_string(symbol->getOffset());
+				writeIntoCodeFile(
+					string("\tMOV AX, [BP - ") + offset + string("]\n") + 
+					string("\tPUSH AX; var push")
+				);
+			}
+		}
+		
 	}
 	| id=ID lpr=LPAREN arg_l=argument_list rpr=RPAREN	{
 		writeIntoparserLogFile(

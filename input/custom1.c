@@ -2,12 +2,12 @@ int main()
 {
 
 	int i;
-
-	if ((i > 0 && i < 10) || (i < 0 && i > -10))
+	i = 100;
+	if ((i > 0 && i++ < 10) || (i < 0 && i > -10))
 		i = 100;
 	else
 		i = 200;
-	printf(i);
+	println(i);
 
 	return 0;
 }

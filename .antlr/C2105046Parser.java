@@ -802,7 +802,7 @@ public class C2105046Parser extends Parser {
 						writeIntoCodeFile(
 							((Func_definitionContext)_localctx).id->getText() + string(" ENDP")
 						);
-						// scopeOffset.pop_back();
+						scopeOffset.pop_back();
 						
 				    
 				}
@@ -941,7 +941,7 @@ public class C2105046Parser extends Parser {
 							((Func_definitionContext)_localctx).id->getText() + string(" ENDP")
 						);
 
-						// scopeOffset.pop_back();
+						scopeOffset.pop_back();
 
 				    
 				}
@@ -1383,7 +1383,7 @@ public class C2105046Parser extends Parser {
 
 							if(!scoped){
 								symbolTable.enterScope();
-								scopeOffset.push_back(0);
+								// scopeOffset.push_back(0);
 							}
 							scoped = false;
 
@@ -1431,7 +1431,7 @@ public class C2105046Parser extends Parser {
 								string("")
 							);
 							symbolTable.exitScope();
-							scopeOffset.pop_back();
+							// scopeOffset.pop_back();
 							((Compound_statementContext)_localctx).return_type =  "void";
 							
 				}
@@ -2709,18 +2709,7 @@ public class C2105046Parser extends Parser {
 							// writeIntoparserLogFile(
 							// 	string("DEBUG var condition check true: ") + msg
 							// );
-							if(symbol->getIsGlobal()){
-								writeIntoCodeFile(
-									string("\tMOV AX, ") + symbol->getName() +
-									string("\n\tPUSH AX; var push")
-								);
-							} else {
-								string offset = to_string(symbol->getOffset());
-								writeIntoCodeFile(
-									string("\tMOV AX, [BP - ") + offset + string("]\n") + 
-									string("\tPUSH AX; var push")
-								);
-							}
+							
 						}
 
 						((VariableContext)_localctx).print_text =  ((VariableContext)_localctx).id->getText();
@@ -2794,27 +2783,27 @@ public class C2105046Parser extends Parser {
 								((VariableContext)_localctx).symbol =  symbol;
 								((VariableContext)_localctx).arr_ind =  ((VariableContext)_localctx).expr.print_text;
 
-								if(symbol->getIsGlobal()){
+								// if(symbol->getIsGlobal()){
 
-									writeIntoCodeFile(
-										string("\tPOP BX ; arr offset\n") +
-										string("\tMOV AX, ") + symbol->getName() + string("[BX]") + 
-										string("\n\tPUSH AX; var push")
-									);
-								} else {
-									string offset = to_string(symbol->getOffset());
-									writeIntoCodeFile(	
-										string("\tPOP BX ; arr offset\n") +
-										string("\tSHL BX, 1\n") +
-										string("\tMOV AX, ") + offset + string("\n") +
-										string("\tSUB AX, BX\n") +
-										string("\tMOV BX, AX\n") +
-										string("\tMOV SI, BX\n") +
-										string("\tNEG SI\n") +
-										string("\tMOV AX, [BP + SI]\n") + 
-										string("\tPUSH AX; var push")
-									);
-								}
+								// 	writeIntoCodeFile(
+								// 		string("\tPOP BX ; arr offset\n") +
+								// 		string("\tMOV AX, ") + symbol->getName() + string("[BX]") + 
+								// 		string("\n\tPUSH AX; var push")
+								// 	);
+								// } else {
+								// 	string offset = to_string(symbol->getOffset());
+								// 	writeIntoCodeFile(	
+								// 		string("\tPOP BX ; arr offset\n") +
+								// 		string("\tSHL BX, 1\n") +
+								// 		string("\tMOV AX, ") + offset + string("\n") +
+								// 		string("\tSUB AX, BX\n") +
+								// 		string("\tMOV BX, AX\n") +
+								// 		string("\tMOV SI, BX\n") +
+								// 		string("\tNEG SI\n") +
+								// 		string("\tMOV AX, [BP + SI]\n") + 
+								// 		string("\tPUSH AX; var push")
+								// 	);
+								// }
 							}
 
 							writeIntoparserLogFile(
@@ -4024,9 +4013,45 @@ public class C2105046Parser extends Parser {
 						// writeIntoparserLogFile(
 						// 	string("DEBUG factor lexpr condition check: ") + msg
 						// );
-						
-						
 
+						SymbolInfo * symbol = ((FactorContext)_localctx).v.symbol;
+
+						if(symbol->getIsArray()){
+							if(symbol->getIsGlobal()){
+								writeIntoCodeFile(
+									string("\tPOP BX ; arr offset\n") +
+									string("\tMOV AX, ") + symbol->getName() + string("[BX]") + 
+									string("\n\tPUSH AX; var push")
+								);
+							} else {
+								string offset = to_string(symbol->getOffset());
+								writeIntoCodeFile(	
+									string("\tPOP BX ; arr offset\n") +
+									string("\tSHL BX, 1\n") +
+									string("\tMOV AX, ") + offset + string("\n") +
+									string("\tSUB AX, BX\n") +
+									string("\tMOV BX, AX\n") +
+									string("\tMOV SI, BX\n") +
+									string("\tNEG SI\n") +
+									string("\tMOV AX, [BP + SI]\n") + 
+									string("\tPUSH AX; var push")
+								);
+							}
+						} else {
+							if(symbol->getIsGlobal()){
+								writeIntoCodeFile(
+									string("\tMOV AX, ") + symbol->getName() +
+									string("\n\tPUSH AX; var push")
+								);
+							} else {
+								string offset = to_string(symbol->getOffset());
+								writeIntoCodeFile(
+									string("\tMOV AX, [BP - ") + offset + string("]\n") + 
+									string("\tPUSH AX; var push")
+								);
+							}
+						}
+						
 					
 				}
 				break;
