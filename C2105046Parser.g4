@@ -2372,7 +2372,8 @@ factor	returns [string print_text, string dataType, bool isArray, SymbolInfo * s
 			);
 			$symbol = nullptr;
 			writeIntoCodeFile(
-				string("\tPUSH ") + $ci->getText() +  string("; Line ") + to_string(_input->LT(-1)->getLine())
+				string("\tMOV AX, ") + $ci->getText() +  string("; Line ") + to_string(_input->LT(-1)->getLine()) + string("\n") +
+				string("\tPUSH AX")
 			);
 	}
 	| cf=CONST_FLOAT	{
