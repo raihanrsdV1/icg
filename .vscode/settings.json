@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "*.g4": "cpp",
+        "string": "cpp"
+    }
+}

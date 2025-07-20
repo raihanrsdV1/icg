@@ -1,0 +1,123 @@
+	ScopeTable# 1 created
+Cmd 1: I
+	Number of parameters mismatch for I
+Cmd 2: I foo
+	Number of parameters mismatch for I
+Cmd 3: I foo int int
+	Number of parameters mismatch for I
+Cmd 4: I foo
+	Number of parameters mismatch for I
+Cmd 5: I foo int float
+	Number of parameters mismatch for I
+Cmd 6: I     int
+	Number of parameters mismatch for I
+Cmd 7: I _temp_
+	Number of parameters mismatch for I
+Cmd 8: I validName
+	Number of parameters mismatch for I
+Cmd 9: I ValidName int float double
+	Number of parameters mismatch for I
+Cmd 10: I a_function FUNCTION int float char
+	Inserted in ScopeTable# 1 at position 1, 1
+Cmd 11: I structVar STRUCT int a int b int
+	Inserted in ScopeTable# 1 at position 3, 1
+Cmd 12: I nice STRUCT INT name INT nice FLOAT yo
+	Inserted in ScopeTable# 1 at position 8, 1
+Cmd 13: I notNice UNION INT name INT nice FLOAT
+	Inserted in ScopeTable# 1 at position 5, 1
+Cmd 14: I unionVar UNION int x float y
+	Inserted in ScopeTable# 1 at position 3, 2
+Cmd 15: I normal int
+	Inserted in ScopeTable# 1 at position 8, 2
+Cmd 16: I normal int
+	'normal' already exists in the current ScopeTable
+Cmd 17: L
+	Number of parameters mismatch for the command L
+Cmd 18: L foo
+	'foo' not found in any of the ScopeTables
+Cmd 19: L 123abc
+	'123abc' not found in any of the ScopeTables
+Cmd 20: L *
+	'*' not found in any of the ScopeTables
+Cmd 21: L
+	Number of parameters mismatch for the command L
+Cmd 22: L a_function
+	'a_function' found in ScopeTable# 1 at position 1, 1
+Cmd 23: D
+	Number of parameters mismatch for the command D
+Cmd 24: D normal
+	Deleted 'normal' from ScopeTable# 1 at position 8, 2
+Cmd 25: D notFoundSymbol
+	Not found in the current ScopeTable
+Cmd 26: D
+	Number of parameters mismatch for the command D
+Cmd 27: D 123
+	Not found in the current ScopeTable
+Cmd 28: D *
+	Not found in the current ScopeTable
+Cmd 29: D structVar
+	Deleted 'structVar' from ScopeTable# 1 at position 3, 1
+Cmd 30: S
+	ScopeTable# 2 created
+Cmd 31: S
+	ScopeTable# 3 created
+Cmd 32: S
+	ScopeTable# 4 created
+Cmd 33: I test int
+	Inserted in ScopeTable# 4 at position 7, 1
+Cmd 34: I test int
+	'test' already exists in the current ScopeTable
+Cmd 35: L test
+	'test' found in ScopeTable# 4 at position 7, 1
+Cmd 36: E
+	ScopeTable# 4 removed
+Cmd 37: L test
+	'test' not found in any of the ScopeTables
+Cmd 38: E
+	ScopeTable# 3 removed
+Cmd 39: L test
+	'test' not found in any of the ScopeTables
+Cmd 40: E
+	ScopeTable# 2 removed
+Cmd 41: E
+	Can't Remove the Main Scope Table
+Cmd 42: E
+	Can't Remove the Main Scope Table
+Cmd 43: E
+	Can't Remove the Main Scope Table
+Cmd 44: P
+	Number of parameters mismatch for the command P
+Cmd 45: P B
+	P command must be “P A” or “P C”
+Cmd 46: P A
+	ScopeTable# 1
+	1--> <a_function,FUNCTION,int<==(float,char)> 
+	2--> 
+	3--> <unionVar,UNION,{(int,x),(float,y)}> 
+	4--> 
+	5--> <notNice,UNION,{(INT,name),(INT,nice),(FLOAT,)}> 
+	6--> 
+	7--> 
+	8--> <nice,STRUCT,{(INT,name),(INT,nice),(FLOAT,yo)}> 
+	9--> 
+	10--> 
+Cmd 47: P C
+	ScopeTable# 1
+	1--> <a_function,FUNCTION,int<==(float,char)> 
+	2--> 
+	3--> <unionVar,UNION,{(int,x),(float,y)}> 
+	4--> 
+	5--> <notNice,UNION,{(INT,name),(INT,nice),(FLOAT,)}> 
+	6--> 
+	7--> 
+	8--> <nice,STRUCT,{(INT,name),(INT,nice),(FLOAT,yo)}> 
+	9--> 
+	10--> 
+Cmd 48: P Z
+	P command must be “P A” or “P C”
+Cmd 49: P 123
+	P command must be “P A” or “P C”
+Cmd 50: Q unexpected_argument
+	No extra parameters allowed for Q
+Cmd 51: Q
+	ScopeTable# 1 removed

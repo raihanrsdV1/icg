@@ -1,0 +1,100 @@
+10
+I
+I foo
+I foo int int
+I foo
+I foo int float
+I     int
+I _temp_
+I validName  
+I ValidName int float double
+I a_function FUNCTION int float char
+I structVar STRUCT int a int b int
+I nice STRUCT INT name INT nice FLOAT yo
+I notNice UNION INT name INT nice FLOAT       
+I unionVar UNION int x float y
+I normal int
+I normal int
+L
+L foo
+L 123abc
+L *
+L 
+L a_function
+D
+D normal
+D notFoundSymbol
+D 
+D 123
+D *
+D structVar
+S
+S
+S
+I test int
+I test int
+L test
+E
+L test
+E
+L test
+E
+E
+E
+E
+P
+P B
+P A
+P C
+P Z
+P 123
+Q unexpected_argument
+Q
+S
+S
+S
+S
+S
+S
+S
+S
+S
+S
+I alpha int
+I beta float
+I gamma char
+I delta double
+I epsilon string
+I zeta long
+I eta short
+I theta void
+I iota unsigned
+I kappa signed
+I lambda const
+I mu volatile
+I nu register
+I xi static
+I omicron extern
+I pi auto
+I rho inline
+I sigma restrict
+I tau _Bool
+I upsilon _Complex
+I phi _Imaginary
+I chi struct
+I psi union
+I omega enum
+I final int
+D final
+L final
+E
+E
+E
+E
+E
+E
+E
+E
+E
+E
+Q

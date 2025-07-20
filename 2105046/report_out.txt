@@ -1,0 +1,433 @@
+// helping hash functions
+// Hash functions sources:  
+//   - SDBM: (https://www.programmingalgorithms.com/algorithm/ sdbm-hash/cpp/)
+//   - MurmurHash2: Austin Appleby, https://github.com/aappleby/smhasher/blob/master/src/MurmurHash2.cpp (slightly modified MurmurHash2A)
+//   - Bob Jenkins' one-at-a-time hash adapted from http://burtleburtle.net/bob/hash/doobs.html
+
+
+// Rehashing Enabled
+This is for samples size: 2000
+
+Performace for SDBM hash: 
+Collision Count: 846
+Total Bucket Size: 308
+Actually Inserted: 1005
+Performance Ratio: 2.74675
+
+Performace for MURMUR hash: 
+Collision Count: 847
+Total Bucket Size: 336
+Actually Inserted: 1005
+Performance Ratio: 2.52083
+
+Performace for JENKINS hash: 
+Collision Count: 846
+Total Bucket Size: 308
+Actually Inserted: 1005
+Performance Ratio: 2.74675
+
+
+This is for samples size: 4000
+
+Performace for SDBM hash: 
+Collision Count: 1801
+Total Bucket Size: 665
+Actually Inserted: 2049
+Performance Ratio: 2.70827
+
+Performace for MURMUR hash: 
+Collision Count: 1798
+Total Bucket Size: 644
+Actually Inserted: 2049
+Performance Ratio: 2.79193
+
+Performace for JENKINS hash: 
+Collision Count: 1788
+Total Bucket Size: 644
+Actually Inserted: 2049
+Performance Ratio: 2.7764
+
+
+This is for samples size: 6000
+
+Performace for SDBM hash: 
+Collision Count: 2640
+Total Bucket Size: 1113
+Actually Inserted: 3054
+Performance Ratio: 2.37197
+
+Performace for MURMUR hash: 
+Collision Count: 2703
+Total Bucket Size: 889
+Actually Inserted: 3054
+Performance Ratio: 3.04049
+
+Performace for JENKINS hash: 
+Collision Count: 2664
+Total Bucket Size: 1148
+Actually Inserted: 3054
+Performance Ratio: 2.32056
+
+
+This is for samples size: 8000
+
+Performace for SDBM hash: 
+Collision Count: 3393
+Total Bucket Size: 1344
+Actually Inserted: 4010
+Performance Ratio: 2.52455
+
+Performace for MURMUR hash: 
+Collision Count: 3422
+Total Bucket Size: 1379
+Actually Inserted: 4010
+Performance Ratio: 2.48151
+
+Performace for JENKINS hash: 
+Collision Count: 3420
+Total Bucket Size: 1295
+Actually Inserted: 4010
+Performance Ratio: 2.64093
+
+
+This is for samples size: 10000
+
+Performace for SDBM hash: 
+Collision Count: 4338
+Total Bucket Size: 1568
+Actually Inserted: 5041
+Performance Ratio: 2.76658
+
+Performace for MURMUR hash: 
+Collision Count: 4322
+Total Bucket Size: 1568
+Actually Inserted: 5041
+Performance Ratio: 2.75638
+
+Performace for JENKINS hash: 
+Collision Count: 4303
+Total Bucket Size: 1799
+Actually Inserted: 5041
+Performance Ratio: 2.39188
+
+
+// Rehashing Disabled
+This is for samples size: 2000
+
+Performace for SDBM hash: 
+Collision Count: 862
+Total Bucket Size: 161
+Actually Inserted: 1005
+Performance Ratio: 5.35404
+
+Performace for MURMUR hash: 
+Collision Count: 861
+Total Bucket Size: 161
+Actually Inserted: 1005
+Performance Ratio: 5.34783
+
+Performace for JENKINS hash: 
+Collision Count: 857
+Total Bucket Size: 161
+Actually Inserted: 1005
+Performance Ratio: 5.32298
+
+
+This is for samples size: 4000
+
+Performace for SDBM hash: 
+Collision Count: 1849
+Total Bucket Size: 231
+Actually Inserted: 2049
+Performance Ratio: 8.00433
+
+Performace for MURMUR hash: 
+Collision Count: 1849
+Total Bucket Size: 231
+Actually Inserted: 2049
+Performance Ratio: 8.00433
+
+Performace for JENKINS hash: 
+Collision Count: 1849
+Total Bucket Size: 231
+Actually Inserted: 2049
+Performance Ratio: 8.00433
+
+
+This is for samples size: 6000
+
+Performace for SDBM hash: 
+Collision Count: 2761
+Total Bucket Size: 364
+Actually Inserted: 3054
+Performance Ratio: 7.58517
+
+Performace for MURMUR hash: 
+Collision Count: 2756
+Total Bucket Size: 364
+Actually Inserted: 3054
+Performance Ratio: 7.57143
+
+Performace for JENKINS hash: 
+Collision Count: 2762
+Total Bucket Size: 364
+Actually Inserted: 3054
+Performance Ratio: 7.58791
+
+
+This is for samples size: 8000
+
+Performace for SDBM hash: 
+Collision Count: 3505
+Total Bucket Size: 595
+Actually Inserted: 4010
+Performance Ratio: 5.89076
+
+Performace for MURMUR hash: 
+Collision Count: 3504
+Total Bucket Size: 595
+Actually Inserted: 4010
+Performance Ratio: 5.88908
+
+Performace for JENKINS hash: 
+Collision Count: 3507
+Total Bucket Size: 595
+Actually Inserted: 4010
+Performance Ratio: 5.89412
+
+
+This is for samples size: 10000
+
+Performace for SDBM hash: 
+Collision Count: 4440
+Total Bucket Size: 735
+Actually Inserted: 5041
+Performance Ratio: 6.04082
+
+Performace for MURMUR hash: 
+Collision Count: 4429
+Total Bucket Size: 735
+Actually Inserted: 5041
+Performance Ratio: 6.02585
+
+Performace for JENKINS hash: 
+Collision Count: 4426
+Total Bucket Size: 735
+Actually Inserted: 5041
+Performance Ratio: 6.02177
+
+
+// on a single table
+
+// rehashing Enabled
+This is for samples size: 2000
+
+Performace for SDBM hash: 
+Collision Count: 948
+Total Bucket Size: 448
+Actually Inserted: 1051
+Performance Ratio: 2.11607
+
+Performace for MURMUR hash: 
+Collision Count: 979
+Total Bucket Size: 224
+Actually Inserted: 1051
+Performance Ratio: 4.37054
+
+Performace for JENKINS hash: 
+Collision Count: 968
+Total Bucket Size: 224
+Actually Inserted: 1051
+Performance Ratio: 4.32143
+
+
+This is for samples size: 4000
+
+Performace for SDBM hash: 
+Collision Count: 1967
+Total Bucket Size: 448
+Actually Inserted: 2142
+Performance Ratio: 4.39062
+
+Performace for MURMUR hash: 
+Collision Count: 1962
+Total Bucket Size: 896
+Actually Inserted: 2142
+Performance Ratio: 2.18973
+
+Performace for JENKINS hash: 
+Collision Count: 1962
+Total Bucket Size: 448
+Actually Inserted: 2142
+Performance Ratio: 4.37946
+
+
+This is for samples size: 6000
+
+Performace for SDBM hash: 
+Collision Count: 2821
+Total Bucket Size: 896
+Actually Inserted: 3114
+Performance Ratio: 3.14844
+
+Performace for MURMUR hash: 
+Collision Count: 2830
+Total Bucket Size: 896
+Actually Inserted: 3114
+Performance Ratio: 3.15848
+
+Performace for JENKINS hash: 
+Collision Count: 2943
+Total Bucket Size: 896
+Actually Inserted: 3114
+Performance Ratio: 3.2846
+
+
+This is for samples size: 8000
+
+Performace for SDBM hash: 
+Collision Count: 3739
+Total Bucket Size: 896
+Actually Inserted: 4166
+Performance Ratio: 4.17299
+
+Performace for MURMUR hash: 
+Collision Count: 3697
+Total Bucket Size: 1792
+Actually Inserted: 4166
+Performance Ratio: 2.06306
+
+Performace for JENKINS hash: 
+Collision Count: 3816
+Total Bucket Size: 1792
+Actually Inserted: 4166
+Performance Ratio: 2.12946
+
+
+This is for samples size: 10000
+
+Performace for SDBM hash: 
+Collision Count: 4776
+Total Bucket Size: 896
+Actually Inserted: 5247
+Performance Ratio: 5.33036
+
+Performace for MURMUR hash: 
+Collision Count: 4492
+Total Bucket Size: 1792
+Actually Inserted: 5247
+Performance Ratio: 2.5067
+
+Performace for JENKINS hash: 
+Collision Count: 4895
+Total Bucket Size: 896
+Actually Inserted: 5247
+Performance Ratio: 5.46317
+
+// rehashing Disabled
+
+This is for samples size: 2000
+
+Performace for SDBM hash: 
+Collision Count: 1040
+Total Bucket Size: 7
+Actually Inserted: 1051
+Performance Ratio: 148.571
+
+Performace for MURMUR hash: 
+Collision Count: 1040
+Total Bucket Size: 7
+Actually Inserted: 1051
+Performance Ratio: 148.571
+
+Performace for JENKINS hash: 
+Collision Count: 1040
+Total Bucket Size: 7
+Actually Inserted: 1051
+Performance Ratio: 148.571
+
+
+This is for samples size: 4000
+
+Performace for SDBM hash: 
+Collision Count: 2133
+Total Bucket Size: 7
+Actually Inserted: 2142
+Performance Ratio: 304.714
+
+Performace for MURMUR hash: 
+Collision Count: 2131
+Total Bucket Size: 7
+Actually Inserted: 2142
+Performance Ratio: 304.429
+
+Performace for JENKINS hash: 
+Collision Count: 2131
+Total Bucket Size: 7
+Actually Inserted: 2142
+Performance Ratio: 304.429
+
+
+This is for samples size: 6000
+
+Performace for SDBM hash: 
+Collision Count: 3102
+Total Bucket Size: 7
+Actually Inserted: 3114
+Performance Ratio: 443.143
+
+Performace for MURMUR hash: 
+Collision Count: 3103
+Total Bucket Size: 7
+Actually Inserted: 3114
+Performance Ratio: 443.286
+
+Performace for JENKINS hash: 
+Collision Count: 3101
+Total Bucket Size: 7
+Actually Inserted: 3114
+Performance Ratio: 443
+
+
+This is for samples size: 8000
+
+Performace for SDBM hash: 
+Collision Count: 4156
+Total Bucket Size: 7
+Actually Inserted: 4166
+Performance Ratio: 593.714
+
+Performace for MURMUR hash: 
+Collision Count: 4157
+Total Bucket Size: 7
+Actually Inserted: 4166
+Performance Ratio: 593.857
+
+Performace for JENKINS hash: 
+Collision Count: 4155
+Total Bucket Size: 7
+Actually Inserted: 4166
+Performance Ratio: 593.571
+
+
+This is for samples size: 10000
+
+Performace for SDBM hash: 
+Collision Count: 5239
+Total Bucket Size: 7
+Actually Inserted: 5247
+Performance Ratio: 748.429
+
+Performace for MURMUR hash: 
+Collision Count: 5237
+Total Bucket Size: 7
+Actually Inserted: 5247
+Performance Ratio: 748.143
+
+Performace for JENKINS hash: 
+Collision Count: 5236
+Total Bucket Size: 7
+Actually Inserted: 5247
+Performance Ratio: 748
+
+
