@@ -81,18 +81,15 @@ int main(){
     int s;
     s = 0;
     for(i=0; i<5; i++){
-        {
+        if(arr[i] % 2 == 0){
             {
-                if(arr[i] % 2 == 0){
-                    {
-                        s = s + y[i];
-                    }
-                }
-                else{
-                    s = s + 10*y[i];
-                }
+                s = s + y[i];
             }
         }
+        else{
+            s = s + 10*y[i];
+        }
+
     }
 
     println(s);
@@ -105,21 +102,12 @@ int main(){
         int b;
         b = 4;
         if(b >= 2){
-            {
-                int u;
-                u = 7;
-                {
-                    int v;
-                    for(v=1; v<=5; v++){
-                        if(v % 2 == 0){
-                            println(v);
-                            {
-                                {
-
-                                }
-                            }
-                        }
-                    }
+            int u;
+            u = 7;
+            int v;
+            for(v=1; v<=5; v++){
+                if(v % 2 == 0){
+                    println(v);
                 }
             }
         }
@@ -135,11 +123,8 @@ int main(){
     } else{
         int c;
         c = 67;
-        {
-            {
-                println(c);
-            }
-        }
+        println(c);
+
     }
 
     p = 0;

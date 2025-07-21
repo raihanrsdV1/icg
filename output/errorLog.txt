@@ -1,6 +1,0 @@
-Error at line 5: Total number of arguments mismatch with declaration in function fact
-
-Error at line 16: Type mismatch,  is an array
-
-Error at line 16: Type mismatch,  is an array
-

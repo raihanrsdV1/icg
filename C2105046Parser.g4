@@ -1623,13 +1623,15 @@ expression returns [string print_text, string dataType]
 			if(symbol != nullptr){
 				if(!symbol->getIsGlobal()){
 					if(symbol->getIsArray()){
-
-						string str_ind = $v.arr_ind;
-						int actual_offset = symbol->getOffset() - stoi(str_ind) * 2;
-
+						// string str_ind = $v.arr_ind;
+						// int actual_offset = symbol->getOffset() - stoi(str_ind) * 2;
 						writeIntoCodeFile(
 							string("\tPOP AX\n") + 
-							string("\tMOV [BP - ") + to_string(actual_offset) + string("], AX")
+							string("\tPOP BX\n") +
+							string("\tSHL BX, 1\n") +
+							string("\tSUB BX, ") + to_string(symbol->getOffset()) + string("\n") +
+							string("\tMOV SI, BX\n") +
+							string("\tMOV [BP + SI], AX")
 						);
 					} else {
 						writeIntoCodeFile(
@@ -1642,12 +1644,13 @@ expression returns [string print_text, string dataType]
 					
 					if(symbol->getIsArray()){
 
-						string str_ind = $v.arr_ind;
-						string actual_offset = to_string(stoi(str_ind) * 2);
+						// string str_ind = $v.arr_ind;
+						// string actual_offset = to_string(stoi(str_ind) * 2);
 
 						writeIntoCodeFile(
 							string("\tPOP AX\n") + 
-							string("\tMOV ") + symbol->getName() + string("[") + str_ind + string("], AX")
+							string("\tPOP BX\n") +
+							string("\tMOV ") + symbol->getName() + string("[BX], AX")
 						);
 					} else {
 						writeIntoCodeFile(
@@ -2415,16 +2418,17 @@ factor	returns [string print_text, string dataType, bool isArray, SymbolInfo * s
 		if(symbol){
 			if(symbol->getIsGlobal()){
 				if(symbol->getIsArray()){
-					string actual_offset = to_string(2 * stoi($var.arr_ind));
+					// string actual_offset = to_string(2 * stoi($var.arr_ind));
 					writeIntoCodeFile(
-						string("\tMOV AX, ") + symbol->getName() + string("[") + actual_offset + string("]; var inc\n") +
+						string("\tPOP BX\n") +
+						string("\tMOV AX, ") + symbol->getName() + string("[BX]; var dec\n") +
 						string("\tPUSH AX\n") +
 						string("\tADD AX, 1\n") + 
-						string("\tMOV ") + symbol->getName() + string("[") + actual_offset + string("], AX\n") 
+						string("\tMOV ") + symbol->getName() + string("[BX], AX; var dec\n") 
 					);
 				} else {
 					writeIntoCodeFile(
-						string("\tMOV AX, ") + symbol->getName() + string("; var inc\n") +
+						string("\tMOV AX, ") + symbol->getName() + string("; var dec\n") +
 						string("\tPUSH AX\n") +
 						string("\tADD AX, 1\n") + 
 						string("\tMOV ") + symbol->getName() + string(", AX\n") 
@@ -2433,17 +2437,21 @@ factor	returns [string print_text, string dataType, bool isArray, SymbolInfo * s
 				
 			} else {
 				if(symbol->getIsArray()){
-					string offset = to_string(symbol->getOffset());
-					string actual_offset = to_string(stoi(offset) - 2 * stoi($var.arr_ind));
+					// string offset = to_string(symbol->getOffset());
+					// string actual_offset = to_string(stoi(offset) - 2 * stoi($var.arr_ind));
 					writeIntoCodeFile(
-						string("\tMOV AX, [BP - ") + actual_offset + string("]; var inc\n") +
+						string("\tPOP BX\n") +
+						string("\tSHL BX, 1\n") +
+						string("\tSUB BX, ") + to_string(symbol->getOffset()) + string("\n") +
+						string("\tMOV SI, BX\n") +
+						string("\tMOV AX, [BP + SI]; var dec\n") +
 						string("\tPUSH AX\n") +
 						string("\tADD AX, 1\n") + 
-						string("\tMOV [BP - ") + actual_offset + string("], AX\n") 
+						string("\tMOV [BP + SI], AX\n") 
 					);
 				} else {
 					writeIntoCodeFile(
-						string("\tMOV AX, [BP - ") + to_string(symbol->getOffset()) + string("]; var inc\n") +
+						string("\tMOV AX, [BP - ") + to_string(symbol->getOffset()) + string("]; var dec\n") +
 						string("\tPUSH AX\n") +
 						string("\tADD AX, 1\n") + 
 						string("\tMOV [BP - ") + to_string(symbol->getOffset()) + string("], AX\n") 
@@ -2451,6 +2459,7 @@ factor	returns [string print_text, string dataType, bool isArray, SymbolInfo * s
 				}
 				
 			}
+			
 		}
 		$symbol = nullptr;
 	}
@@ -2466,12 +2475,13 @@ factor	returns [string print_text, string dataType, bool isArray, SymbolInfo * s
 		if(symbol){
 			if(symbol->getIsGlobal()){
 				if(symbol->getIsArray()){
-					string actual_offset = to_string(2 * stoi($var.arr_ind));
+					// string actual_offset = to_string(2 * stoi($var.arr_ind));
 					writeIntoCodeFile(
-						string("\tMOV AX, ") + symbol->getName() + string("[") + actual_offset + string("]; var dec\n") +
+						string("\tPOP BX\n") +
+						string("\tMOV AX, ") + symbol->getName() + string("[BX]; var dec\n") +
 						string("\tPUSH AX\n") +
 						string("\tSUB AX, 1\n") + 
-						string("\tMOV ") + symbol->getName() + string("[") + actual_offset + string("], AX; var dec\n") 
+						string("\tMOV ") + symbol->getName() + string("[BX], AX; var dec\n") 
 					);
 				} else {
 					writeIntoCodeFile(
@@ -2484,13 +2494,17 @@ factor	returns [string print_text, string dataType, bool isArray, SymbolInfo * s
 				
 			} else {
 				if(symbol->getIsArray()){
-					string offset = to_string(symbol->getOffset());
-					string actual_offset = to_string(stoi(offset) - 2 * stoi($var.arr_ind));
+					// string offset = to_string(symbol->getOffset());
+					// string actual_offset = to_string(stoi(offset) - 2 * stoi($var.arr_ind));
 					writeIntoCodeFile(
-						string("\tMOV AX, [BP - ") + actual_offset + string("]; var dec\n") +
+						string("\tPOP BX\n") +
+						string("\tSHL BX, 1\n") +
+						string("\tSUB BX, ") + to_string(symbol->getOffset()) + string("\n") +
+						string("\tMOV SI, BX\n") +
+						string("\tMOV AX, [BP + SI]; var dec\n") +
 						string("\tPUSH AX\n") +
 						string("\tSUB AX, 1\n") + 
-						string("\tMOV [BP - ") + actual_offset + string("], AX\n") 
+						string("\tMOV [BP + SI], AX\n") 
 					);
 				} else {
 					writeIntoCodeFile(
