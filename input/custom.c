@@ -58,5 +58,53 @@ int main(){
     println(p);
 	println(i);
 
+	k = 9;
+	p = 3;
+
+	k = k / p;
+	println(k);
+	k = 10;
+	k = k % p;
+	println(k);
+
+	k = -9;
+	p = 3;
+	k = k / p;
+	println(k);
+
+
+	k = -10;
+	p = 3;
+	k = k % p;
+	println(k);
+
+	k = -10;
+	p = 3;
+	k = k * p;
+	println(k);
+
+	k = -9;
+	p = -3;
+	k = k / p;
+	println(k);
+
+
+	k = -10;
+	p = -3;
+	k = k % p;
+	println(k);
+
+	k = 9;
+	p = -3;
+	k = k / p;
+	println(k);
+
+
+	k = 10;
+	p = -3;
+	k = k % p;
+	println(k);
+
+
 	return 0;
 }

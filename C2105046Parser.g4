@@ -1597,7 +1597,9 @@ expression returns [string print_text, string dataType]
 				}
 			}
 
-
+			// writeIntoparserLogFile(
+			// 	string("cums\n")
+			// );
 			
 
 			writeIntoparserLogFile(
@@ -1615,13 +1617,16 @@ expression returns [string print_text, string dataType]
 				syntaxErrorCount++;
 			}
 
+			
 			// Assembly Code 
 			SymbolInfo* symbol = $v.symbol;
-			if(symbol){
+			if(symbol != nullptr){
 				if(!symbol->getIsGlobal()){
 					if(symbol->getIsArray()){
+
 						string str_ind = $v.arr_ind;
 						int actual_offset = symbol->getOffset() - stoi(str_ind) * 2;
+
 						writeIntoCodeFile(
 							string("\tPOP AX\n") + 
 							string("\tMOV [BP - ") + to_string(actual_offset) + string("], AX")
@@ -1636,8 +1641,10 @@ expression returns [string print_text, string dataType]
 				} else {
 					
 					if(symbol->getIsArray()){
+
 						string str_ind = $v.arr_ind;
 						string actual_offset = to_string(stoi(str_ind) * 2);
+
 						writeIntoCodeFile(
 							string("\tPOP AX\n") + 
 							string("\tMOV ") + symbol->getName() + string("[") + str_ind + string("], AX")
@@ -1656,6 +1663,9 @@ expression returns [string print_text, string dataType]
 			writeIntoCodeFile(
 				string("\tPUSH AX; expression push")
 			);
+
+			
+
 			
 	   }
 	   |
@@ -2045,15 +2055,15 @@ term 	returns [string print_text, string dataType, bool isArray, SymbolInfo* sym
 				
 			if($mul->getText()== "*"){
 				writeIntoCodeFile(
-					string("\tMUL BX\n\tPUSH AX")
+					string("\tIMUL BX\n\tPUSH AX")
 				);
 			} else if($mul->getText() == "/"){
 				writeIntoCodeFile(
-					string("\tXOR DX, DX\n\tDIV BX\n\tPUSH AX")
+					string("\tCWD\n\tIDIV BX\n\tPUSH AX")
 				);
 			}	else if($mul->getText() == "%") {
 				writeIntoCodeFile(
-					string("\tXOR DX, DX\n\tDIV BX\n\tPUSH DX")
+					string("\tCWD\n\tIDIV BX\n\tPUSH DX")
 				);
 			}
 			
